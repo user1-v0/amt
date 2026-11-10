@@ -2,8 +2,15 @@ FROM node:22.22.3-bookworm-slim
 
 WORKDIR /app
 
+ENV npm_config_update_notifier=false \
+    npm_config_fund=false \
+    npm_config_audit=false
+
 COPY package.json package-lock.json ./
-RUN npm --version && npm ci
+# npm can exit after a completed install with "Exit handler never called".
+RUN npm ci --no-audit --no-fund \
+    || test -s node_modules/next/package.json \
+    || npm ci --no-audit --no-fund
 
 COPY . .
 

@@ -7,8 +7,8 @@ services:
       - .env
     environment:
       CLAUDE_MODEL: ${CLAUDE_MODEL:-sonnet}
-    volumes:
-      - ./workspace:/app/workspace
+    tmpfs:
+      - /app/workspace:size=8g,mode=1777
   web:
     build:
       context: ./web
