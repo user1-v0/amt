@@ -1,0 +1,11 @@
+.venv
+.git
+.env
+workspace
+samples
+__pycache__
+.pytest_cache
+*.pyc
+.cursor
+web/node_modules
+web/.next

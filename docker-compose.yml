@@ -1,0 +1,22 @@
+services:
+  api:
+    platform: linux/arm64
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+      - .env
+    environment:
+      CLAUDE_MODEL: ${CLAUDE_MODEL:-sonnet}
+    volumes:
+      - ./workspace:/app/workspace
+  web:
+    platform: linux/arm64
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - api
