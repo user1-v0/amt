@@ -6,11 +6,11 @@ ENV npm_config_update_notifier=false \
     npm_config_fund=false \
     npm_config_audit=false
 
+# Node 22.22.3 ships npm 10.9.8, which crashes during npm ci on some machines.
+RUN npm install -g npm@10.8.2
+
 COPY package.json package-lock.json ./
-# npm can exit after a completed install with "Exit handler never called".
-RUN npm ci --no-audit --no-fund \
-    || test -s node_modules/next/package.json \
-    || npm ci --no-audit --no-fund
+RUN npm --version && npm ci --no-audit --no-fund
 
 COPY . .
 
