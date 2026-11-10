@@ -1,9 +1,9 @@
-FROM node:22-bookworm-slim
+FROM node:22.22.3-bookworm-slim
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm --version && npm ci
 
 COPY . .
 
